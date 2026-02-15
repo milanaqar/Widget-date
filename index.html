@@ -28,6 +28,7 @@
       width: 220px;
       height: 280px;
       user-select: none;
+      perspective: 1000px;
     }
 
     /* Binder Rings at the top for realism */
@@ -43,13 +44,23 @@
     }
 
     .ring {
-      width: 12px;
-      height: 40px;
-      background: linear-gradient(to right, #333, #666 50%, #333);
-      border-radius: 6px;
+      width: 14px;
+      height: 44px;
+      background: linear-gradient(to right, 
+        #2a2a2a 0%, 
+        #444444 20%, 
+        #999999 45%, 
+        #cccccc 50%, 
+        #999999 55%, 
+        #444444 80%, 
+        #2a2a2a 100%
+      );
+      border-radius: 7px;
       box-shadow: 
-        inset 0 2px 4px rgba(255,255,255,0.1),
-        0 4px 8px rgba(0,0,0,0.6);
+        inset 0 1px 2px rgba(255,255,255,0.4),
+        0 4px 10px rgba(0,0,0,0.8),
+        0 12px 12px -5px rgba(0,0,0,0.6); /* Shadow cast on paper */
+      position: relative;
     }
 
     /* The Paper Stack Effect */
@@ -57,24 +68,26 @@
       position: relative;
       width: 100%;
       height: 100%;
-      background: #252525; /* Dark 'paper' color to contrast with the light text */
-      border-radius: 8px;
+      background: #222222;
+      border-radius: 12px;
       box-shadow: 
+        0 1px 0 rgba(255,255,255,0.08), /* Top edge highlight */
         0 1px 1px rgba(0,0,0,0.5),
-        0 10px 0 -5px #202020, /* Second sheet */
+        0 10px 0 -5px #1e1e1e, /* Second sheet */
         0 10px 2px -4px rgba(0,0,0,0.4),
-        0 20px 0 -10px #1c1c1c, /* Third sheet */
+        0 20px 0 -10px #1a1a1a, /* Third sheet */
         0 20px 4px -8px rgba(0,0,0,0.4),
-        0 30px 40px rgba(0,0,0,0.8); /* Deep floor shadow */
+        0 40px 60px rgba(0,0,0,0.9); /* Deep ambient occlusion shadow */
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      border: 1px solid rgba(0,0,0,0.4);
     }
 
     /* The 'Header' of the paper sheet */
     .paper-header {
       height: 60px;
-      background: rgb(73, 43, 96);
+      background: linear-gradient(to bottom, #492b60, #3a224d);
       border-bottom: 1px solid rgba(255,255,255,0.05);
       display: flex;
       justify-content: space-around;
@@ -82,13 +95,15 @@
       padding: 0 30px;
     }
 
-    /* Holes in the paper */
+  /* Holes in the paper - Inner shadow for depth */
     .hole {
-      width: 16px;
-      height: 16px;
-      background: #111;
+      width: 18px;
+      height: 18px;
+      background: #0a0a0a;
       border-radius: 50%;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,1);
+      box-shadow: 
+        inset 0 3px 6px rgba(0,0,0,1),
+        0 1px 1px rgba(255,255,255,0.05);
     }
 
     /* The Main Content Area */
@@ -99,17 +114,31 @@
       justify-content: center;
       align-items: center;
       position: relative;
+      background-color: #252525;
+      overflow: hidden;
     }
 
-    /* Subtle paper texture */
-    .paper-body::before {
-      content: "";
+    /* High-quality vintage paper texture */
+    .paper-texture {
       position: absolute;
       inset: 0;
-      background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
-      opacity: 0.05;
+      background-image: url('https://www.transparenttextures.com/patterns/handmade-paper.png');
+      opacity: 0.15; /* Increased for character */
       pointer-events: none;
+      z-index: 1;
     }
+
+      /* Lighting overlay for realism */
+    .paper-lighting {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 50%, rgba(0,0,0,0.1) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    
+
 
     .month {
       font-size: 18px;
@@ -135,15 +164,17 @@
       margin-top: -10px;
     }
 
-    /* Perforation line at the top */
+   /* Perforation line with more detail */
     .perforation {
       position: absolute;
-      top: 60px;
+      top: 65px;
       left: 0;
       right: 0;
-      height: 1px;
-      background: repeating-linear-gradient(90deg, transparent, transparent 4px, #111 4px, #111 8px);
-      opacity: 0.5;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, transparent, transparent 4px, #111 4px, #111 10px);
+      opacity: 0.6;
+      z-index: 4;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.03);
     }
   </style>
 </head>
